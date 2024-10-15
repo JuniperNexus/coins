@@ -1,4 +1,4 @@
-import { fetchData } from '@/server/api';
+import { fetchData } from '@/lib/sheet';
 
 import { ActivityTable } from './activity-table';
 import { SummaryCards } from './summary-cards';

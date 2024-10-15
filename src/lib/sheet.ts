@@ -2,7 +2,7 @@ import { env } from '@/env';
 import { type Member } from '@/types/member';
 import { SpreadORM } from 'spreadorm';
 
-const orm = new SpreadORM<Member>(env.SHEET_ID);
+const orm = new SpreadORM<Member>(env.NEXT_PUBLIC_SHEETS_SPREAD);
 
 export async function fetchData(): Promise<Member[]> {
     try {
