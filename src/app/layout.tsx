@@ -8,8 +8,8 @@ import { Provider } from 'react-wrap-balancer';
 
 export const metadata: Metadata = commonMetaData({
     description:
-        "Explore the Guild Coins Dashboard, featuring real-time insights on member participation and activities. With 31 total members, 72 participations, and an average participation rate of 46.45%, this dashboard provides a comprehensive view of your guild's engagement. View and sort member coin balances to encourage participation and enhance community dynamics. Discover how each member contributes to the guild's success!",
-    title: 'Juniper Nexus - Guild Coins Dashboard: Track Member Engagement and Activities"',
+        'Discover the Guild Coins Dashboard for real-time insights on member participation, activities, and engagement metrics. Enhance community dynamics today!',
+    title: 'Juniper Nexus: Real-Time Guild Coins Dashboard for Member Engagement',
 });
 
 const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
