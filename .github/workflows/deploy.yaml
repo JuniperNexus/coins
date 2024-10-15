@@ -39,6 +39,8 @@ jobs:
               run: pnpm install
             - name: Build with Next.js 🏗️
               run: pnpm build
+              env:
+                  NEXT_PUBLIC_SHEETS_SPREAD: ${{ secrets.NEXT_PUBLIC_SHEETS_SPREAD }}
             - name: Upload artifact 📤
               uses: actions/upload-pages-artifact@v3
               with:
