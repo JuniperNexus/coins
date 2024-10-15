@@ -4,10 +4,11 @@ import { Badge } from '@/components/ui/badge';
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Table, TableBody, TableCell, TableHeader, TableRow } from '@/components/ui/table';
+import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from '@/components/ui/tooltip';
 import { activities } from '@/constants/activities';
 import { sortAndFilterData } from '@/lib/dataManipulation';
 import { type Member } from '@/types/member';
-import { ChevronLeft, ChevronRight, Search } from 'lucide-react';
+import { ChevronLeft, ChevronRight, RefreshCw, Search } from 'lucide-react';
 import { useState } from 'react';
 
 import { SortableHeader } from './sortable-header';
@@ -57,20 +58,31 @@ export function ActivityTable({ data }: { data: Member[] }) {
             </CardHeader>
             <CardContent>
                 <div className="mb-4 flex items-center justify-between space-x-4">
-                    <div className="relative">
+                    <div className="relative w-full">
                         <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                             <Search className="size-4 text-muted-foreground" />
                         </div>
                         <Input
-                            className="max-w-sm pl-10"
+                            className="max-w-none pl-10 sm:max-w-sm"
                             onChange={(e) => setFilter(e.target.value)}
                             placeholder="Filter by name or username"
                             value={filter}
                         />
                     </div>
-                    <Button onClick={handleReset} variant="ghost">
-                        Reset Filter
-                    </Button>
+
+                    <TooltipProvider>
+                        <Tooltip>
+                            <TooltipTrigger asChild>
+                                <Button onClick={handleReset} size="icon" variant="ghost">
+                                    <RefreshCw className="size-4" />
+                                    <span className="sr-only"></span>
+                                </Button>
+                            </TooltipTrigger>
+                            <TooltipContent side="left">
+                                <p>Reset the filter and sort</p>
+                            </TooltipContent>
+                        </Tooltip>
+                    </TooltipProvider>
                 </div>
                 <div className="rounded-md border">
                     <Table>
@@ -97,6 +109,12 @@ export function ActivityTable({ data }: { data: Member[] }) {
                                         onSort={handleSort}
                                     />
                                 ))}
+                                <SortableHeader
+                                    column="Total"
+                                    currentSort={sortColumn}
+                                    direction={sortDirection}
+                                    onSort={handleSort}
+                                />
                             </TableRow>
                         </TableHeader>
                         <TableBody>
@@ -115,19 +133,27 @@ export function ActivityTable({ data }: { data: Member[] }) {
                                             )}
                                         </TableCell>
                                     ))}
+                                    <TableCell className="text-right">
+                                        {member.Total !== null ? (
+                                            <Badge variant="secondary">{member.Total}</Badge>
+                                        ) : (
+                                            '-'
+                                        )}
+                                    </TableCell>
                                 </TableRow>
                             ))}
                         </TableBody>
                     </Table>
                 </div>
                 {/* Pagination Controls */}
-                <div className="mt-4 flex justify-between">
+                <div className="mt-4 flex items-center justify-between space-x-4">
                     <Button
                         disabled={currentPage === 1}
                         onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
+                        size="icon"
                     >
-                        <ChevronLeft className="mr-2 size-4" />
-                        Previous
+                        <ChevronLeft className="size-4" />
+                        <span className="sr-only">Previous</span>
                     </Button>
                     <span>
                         Page {currentPage} of {totalPages}
@@ -135,9 +161,10 @@ export function ActivityTable({ data }: { data: Member[] }) {
                     <Button
                         disabled={currentPage === totalPages}
                         onClick={() => setCurrentPage((prev) => Math.min(prev + 1, totalPages))}
+                        size="icon"
                     >
-                        Next
-                        <ChevronRight className="ml-2 size-4" />
+                        <span className="sr-only">Next</span>
+                        <ChevronRight className="size-4" />
                     </Button>
                 </div>
             </CardContent>
