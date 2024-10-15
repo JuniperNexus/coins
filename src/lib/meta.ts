@@ -19,7 +19,7 @@ export function commonMetaData({ description, title }: CommonMetaData): Metadata
             images: [
                 {
                     height: 630,
-                    url: '/coins/opengraph.jpg',
+                    url: '/opengraph.jpg',
                     width: 1200,
                 },
             ],
