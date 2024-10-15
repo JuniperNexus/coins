@@ -24,4 +24,4 @@ const RootLayout = ({ children }: Readonly<{ children: React.ReactNode }>) => {
 
 export default RootLayout;
 
-export const revalidate = 60; // 1 minutes
+export const revalidate = 0; // Disable revalidation
